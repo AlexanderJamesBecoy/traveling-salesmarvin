@@ -43,5 +43,9 @@ def orientate_logo(points, theta=np.pi):
     points = np.matmul(R2, np.matmul(R1, np.array(points).T)).T
     return points
 
-def generate_noise(points):
-    pass
+def generate_noise(points, var=1.0):
+    new_points = np.zeros(points.shape)
+    for idx, point in enumerate(points):
+        new_points[idx][0] = np.random.normal(point[0], var)
+        new_points[idx][1] = np.random.normal(point[1], var)
+    return new_points
