@@ -97,6 +97,7 @@ def solve_tsp(locations_tsp, cost_matrix): # based on "http://www.opl.ufc.br/pos
                     break
                 else:
                     sorted_sol.append(ii[1])
+                    print('Next step: {}'.format(sorted_sol[-1]))
     sorted_sol.append(1) # we go back to the depot
             
     return sorted_sol
