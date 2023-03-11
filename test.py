@@ -10,13 +10,13 @@ Credits:
 - TSP/ILP: RO47005 - Planning & Decision Making Lecture 16
 """
 
-points = logo.get_points(density=0.01)
+points = logo.get_points(density=0.05)
 points = logo.orientate_logo(points)
 points = logo.generate_noise(points, var=3.0)
 print("Number of points: {}".format(len(points)))
 
 plt.figure()
-plt.scatter(points[:,0], points[:,1])
+plt.scatter(points[:,0], points[:,1], s=0.5, color='black')
 plt.show()
 
 start_time = time.time()
@@ -28,8 +28,8 @@ print("Execution time: {} m".format(time_diff))
 sol = np.array(sol) - 1
 
 plt.figure()
-plt.scatter(points[:,0], points[:,1])
-plt.plot(points[sol][:,0], points[sol][:,1])
+# plt.scatter(points[:,0], points[:,1], s=0.5, color='black')
+plt.plot(points[sol][:,0], points[sol][:,1], linewidth=1.0, color='orange')
 plt.savefig('figure.png', transparent=True)
 plt.show()
 
