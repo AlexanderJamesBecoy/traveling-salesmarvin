@@ -31,11 +31,16 @@ def points_from_doc(doc, density=5, scale=1, offset=0):
 
     return points
 
-def get_points(density=0.05, scale=1):
-    doc = minidom.parse('RSA_logo.svg')
+def get_points(filename, density=0.05, scale=1):
+    doc = minidom.parse(filename)
     points = points_from_doc(doc, density, scale, (0, 0))
     doc.unlink()
     return points
+
+def center_logo(points, offset=[0.,0.]):
+    mean = np.mean(points, axis=0) + np.array(offset)
+    centered_points = points - np.tile(mean.reshape(1,-1), (len(points),1))
+    return centered_points
 
 def orientate_logo(points, theta=np.pi):
     R1 = [[np.cos(theta), -np.sin(theta)],[np.sin(theta), np.cos(theta)]]
