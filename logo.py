@@ -2,6 +2,7 @@ from svg.path import parse_path
 from xml.dom import minidom
 import numpy as np
 
+
 def get_point_at(path, distance, scale, offset):
     pos = path.point(distance)
     pos += offset
@@ -54,3 +55,20 @@ def generate_noise(points, var=1.0):
         new_points[idx][0] = np.random.normal(point[0], var)
         new_points[idx][1] = np.random.normal(point[1], var)
     return new_points
+
+def import_pmb(filename, image_height, image_width, density):
+    points = []
+
+    with open(filename, "r") as f:
+        for line in f.readlines()[3:]:
+            for bit in line:
+                if bit != '\n':
+                    points.append(int(bit))
+
+    points = np.array(points).reshape(image_height, image_height)
+    points = np.vstack(np.where(points == 1)).T
+    points = orientate_logo(points, 1.5*np.pi)
+    points = (np.array([[-1.,0.],[0.,1.]]) @ points.T).T
+    density = int(1.0/density)
+
+    return points[::density]
