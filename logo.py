@@ -65,10 +65,11 @@ def import_pmb(filename, image_height, image_width, density):
                 if bit != '\n':
                     points.append(int(bit))
 
-    points = np.array(points).reshape(image_height, image_height)
+    points = np.array(points).reshape(image_height, image_width)
     points = np.vstack(np.where(points == 1)).T
     points = orientate_logo(points, 1.5*np.pi)
     points = (np.array([[-1.,0.],[0.,1.]]) @ points.T).T
+    np.random.shuffle(points)
     density = int(1.0/density)
 
     return points[::density]
