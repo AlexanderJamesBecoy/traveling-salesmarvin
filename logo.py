@@ -69,7 +69,8 @@ def import_pmb(filename, image_height, image_width, density):
     points = np.vstack(np.where(points == 1)).T
     points = orientate_logo(points, 1.5*np.pi)
     points = (np.array([[-1.,0.],[0.,1.]]) @ points.T).T
-    np.random.shuffle(points)
-    density = int(1.0/density)
 
-    return points[::density]
+    density = int(len(points) * density)
+    idxs = np.random.choice(len(points), size=density, replace=False)
+
+    return points[idxs]
